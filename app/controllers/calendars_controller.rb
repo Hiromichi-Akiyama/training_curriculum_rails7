@@ -34,7 +34,10 @@ class CalendarsController < ApplicationController
       plans.each do |plan|
         today_plans.push(plan.plan) if plan.date == @todays_date + x
       end
-      days = { :month => (@todays_date + x).month, :date => (@todays_date+x).day, :plans => today_plans}
+
+      # Date#wdayメソッドで曜日を取得し、daysハッシュに:wdayキーとして追加します。
+      wday_num = (@todays_date + x).wday # wdayは常に0〜6を返すため安全です
+      days = { month: (@todays_date + x).month, date: (@todays_date + x).day, plans: today_plans, wday: wdays[wday_num] }
       @week_days.push(days)
     end
 
